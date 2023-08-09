@@ -50,7 +50,7 @@ builder.Services.AddWebServices(builder.Configuration);
 // Add memory cache services
 builder.Services.AddMemoryCache();
 builder.Services.AddRouting(options =>
-{
+{  // random comment
     // Replace the type and the name used to refer to it with your own
     // IOutboundParameterTransformer implementation
     options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
