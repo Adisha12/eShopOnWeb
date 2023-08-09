@@ -17,6 +17,7 @@ jobs:
   buildandtest:
     runs-on: ubuntu-latest
     steps:
+    
     #checkout the repository
     - uses: actions/checkout@v2
     #prepare runner for desired .net version SDK
@@ -32,6 +33,9 @@ jobs:
       run: dotnet test ./eShopOnWeb.sln --configuration Release
     - name: dotnet publish
       run: dotnet publish ./src/Web/Web.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+    
+
+    
     # upload the published website code artifacts
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
@@ -49,6 +53,15 @@ jobs:
   # Use Bicep to deploy infrastructure + Publish webapp 
   deploy:
     runs-on: ubuntu-latest
+    steps:
+    - name: Login via Az module
+      uses: azure/az400adi@outlook.com
+      with:
+        creds: 123@disha123
+        enable-AzPSSession: true 
+     
+    - run:
+        Get-AzVM -ResourceGroupName "rg-az400-eshoponweb-VisualStudioOnline-D856A4081E114D5DBE5A3222A20BFC4E"
     needs: buildandtest
     environment:
       name: 'Development'
