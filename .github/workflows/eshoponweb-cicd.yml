@@ -53,6 +53,9 @@ jobs:
   # Use Bicep to deploy infrastructure + Publish webapp 
   deploy:
     runs-on: ubuntu-latest
+    needs: buildandtest
+    environment:
+      name: 'Development'
     steps:
     - name: Login via Az module
       uses: azure/az400adi@outlook.com
@@ -60,13 +63,8 @@ jobs:
         creds: 123@disha123
         enable-AzPSSession: true 
      
-    - run:
+    - run: |
         Get-AzVM -ResourceGroupName "rg-az400-eshoponweb-VisualStudioOnline-D856A4081E114D5DBE5A3222A20BFC4E"
-    needs: buildandtest
-    environment:
-      name: 'Development'
-    steps:
-    
     #Download the publish files created in previous job
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
